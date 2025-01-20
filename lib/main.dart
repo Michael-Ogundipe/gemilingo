@@ -3,18 +3,21 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import 'home_page.dart';
+import 'routing/route_generator.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
+
+  final router = RouteGenerator();
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: '',
       debugShowCheckedModeBanner: false,
@@ -31,16 +34,8 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'GemiLingo',
-            style: TextStyle(fontSize: 28, color: Colors.white),
-          ),
-          centerTitle: true,
-        ),
-        body: const HomePage(),
-      ),
+      initialRoute: '/',
+      onGenerateRoute: router.routeGenerate,
     );
   }
 }
@@ -251,7 +246,7 @@ class MessageWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isFromUser
                     ? Theme.of(context).colorScheme.primaryContainer
-                    : Theme.of(context).colorScheme.surfaceVariant,
+                    : Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(18),
               ),
               padding: const EdgeInsets.symmetric(
