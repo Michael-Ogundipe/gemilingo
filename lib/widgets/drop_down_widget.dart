@@ -16,19 +16,16 @@ class DropDownWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      width: MediaQuery.of(context).size.width *0.36,
+      width: MediaQuery.of(context).size.width * 0.36,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.white), // Match your other borders
-        borderRadius:
-            BorderRadius.circular(10), // Match your other border radius
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButton<String>(
         value: value,
-
         isExpanded: true,
         underline: Container(),
-        // Remove the default underline
         items: items,
         onChanged: onChanged,
       ),

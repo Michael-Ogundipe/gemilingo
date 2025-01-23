@@ -48,10 +48,11 @@ class _TranslationFieldState extends State<TranslationField> {
       height: MediaQuery.of(context).size.height * 0.25,
       width: double.infinity,
       decoration: BoxDecoration(
-          border: Border.all(
-            color: _isFocused ? Colors.blue : Colors.white,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
+        border: Border.all(
+          color: _isFocused ? Colors.blue : Colors.white,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,6 +61,7 @@ class _TranslationFieldState extends State<TranslationField> {
           TextFormField(
             focusNode: _focusNode,
             controller: widget.controller,
+            maxLines: 4,
             autofocus: false,
             onChanged: widget.onChanged,
             style: const TextStyle(fontSize: 20),

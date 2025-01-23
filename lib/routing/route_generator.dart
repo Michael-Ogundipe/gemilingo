@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 import '../home_page.dart';
 import '../text_to_text_page.dart';
+import '../voice_to_text_page.dart';
 import 'routes.dart';
 
 class RouteGenerator {
-
   RouteGenerator() : super();
 
   Route? routeGenerate(RouteSettings route) {
@@ -17,8 +17,9 @@ class RouteGenerator {
         return navigateToRoute(const HomePage());
       case textToText:
         return navigateToRoute(const TextToTextPage());
+      case voiceToText:
+        return navigateToRoute(const VoiceToTextPage());
     }
-
     return null;
   }
 
@@ -26,7 +27,6 @@ class RouteGenerator {
     if (Platform.isAndroid) {
       return MaterialPageRoute(builder: (context) => page);
     }
-
     if (Platform.isIOS) {
       return CupertinoPageRoute(builder: (context) => page);
     }

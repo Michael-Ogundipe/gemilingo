@@ -22,7 +22,7 @@ class _TextToTextPageState extends State<TextToTextPage> {
   bool _isTranslating = false;
 
   String _selectedLanguage = 'English';
-  String _translatedLanguage = 'Spanish';
+  String _translatedLanguage = 'French';
 
   final List<String> _languages = [
     'English',
@@ -74,7 +74,7 @@ class _TextToTextPageState extends State<TextToTextPage> {
     setState(() => _isTranslating = true);
 
     try {
-      final prompt = 'Translate this text to French: "$text".  '
+      final prompt = 'Translate this text to $_translatedLanguage: "$text".  '
           'Respond with only the translation, no quotes or additional text.';
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
@@ -99,6 +99,7 @@ class _TextToTextPageState extends State<TextToTextPage> {
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: Column(
           children: [
+            const SizedBox(height: 20),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -117,7 +118,6 @@ class _TextToTextPageState extends State<TextToTextPage> {
                         if (_inputController.text.isNotEmpty) {
                           _translateText(_inputController.text);
                         }
-
                       });
                     }
                   },
@@ -156,12 +156,12 @@ class _TextToTextPageState extends State<TextToTextPage> {
             ),
             const SizedBox(height: 16),
             TranslationField(
-              label: 'English',
+              label: _selectedLanguage,
               hintText: 'Enter your text...',
               onChanged: _onTextChanged,
             ),
             TranslationField(
-              label: 'French',
+              label: _translatedLanguage,
               controller: _translatedController,
               readOnly: true,
             ),

@@ -4,3 +4,4 @@
 /// ``` const String *viewName*ViewRoute = 'unique_route_name';  ```
 const String home = '/home';
 const String textToText = '/textToText';
+const String voiceToText = '/voiceToText';

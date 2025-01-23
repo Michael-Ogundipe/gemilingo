@@ -14,7 +14,8 @@ class GeminiService {
 
   Future<String> translateText(String text, String targetLanguage) async {
     try {
-      final prompt = 'Translate this text to $targetLanguage: "$text"';
+      final prompt = 'Translate this text to $targetLanguage: "$text"'
+          'Respond with only the translation, no quotes or additional text.';
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
       return response.text ?? 'Translation error';

@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, voiceToText),
                   icon: const Icon(Icons.mic),
                   label: const Text(
                     'Voice to Text',
