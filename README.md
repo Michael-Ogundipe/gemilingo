@@ -10,8 +10,9 @@ Gemilingo is an innovative AI-powered application designed to break language bar
 ### Background
 Gemilingo was inspired by a real-life challenge when a first-time visitor to church spoke only French, making communication difficult. This experience led to the creation of an app to bridge language gaps in real-time using advanced AI technologies.
 
-#### Tech Stack
+### Tech Stack
 Frontend: Built with Flutter for a sleek and responsive user interface.
+
 AI Models: Powered by Gemini AI for efficient and accurate translations.
 
 ### Why Gemilingo?
