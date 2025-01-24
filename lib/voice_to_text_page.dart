@@ -1,11 +1,12 @@
+import 'dart:io';
 import 'dart:math' show pi;
 
-import 'package:just_audio/just_audio.dart';
-import 'package:path/path.dart' as p;
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gemilingo/widgets/translation_field.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
 
 import 'widgets/blob.dart';
 
@@ -23,11 +24,14 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   late Animation<double> _animation;
   double _scale = 0.85;
 
-  final audioRecorder = AudioRecorder();
-  final audioPlayer = AudioPlayer();
+  FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
+  final recorder = FlutterSoundRecorder();
+  final  _codec = Codec.aacMP4;
+  final  _mPath = 'audio_record.mp4';
+  static const theSource = AudioSource.microphone;
 
-  String? recordingPath;
-  bool isRecording = false, isPlaying = false;
+
+  bool isRecording = false;
 
   @override
   void initState() {
@@ -37,11 +41,69 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    _animation = Tween<double>(begin: 0.0, end: 2 * pi).animate(
-      _rotationController,
-    );
+    _animation =
+        Tween<double>(begin: 0.0, end: 2 * pi).animate(_rotationController);
 
     _rotationController.repeat();
+    openRecorder();
+  }
+
+  Future<void> openRecorder()async {
+    await recorder.openRecorder();
+    await _mPlayer!.openPlayer();
+  }
+
+
+  Future<void> recordAudio() async {
+
+    await recorder.startRecorder(
+      toFile: _mPath,
+      codec: _codec,
+      audioSource: theSource,
+    )
+        .then((value) {
+      setState(() {});
+    });
+  }
+
+  void stopAndTranslate(String targetLanguage) async {
+    final path = await recorder.stopRecorder();
+    final audioFile = File(path!);
+
+    print('audio mie');
+    print(audioFile);
+
+    // Future.delayed(Duration(seconds: 2), (){
+    //   _mPlayer!
+    //       .startPlayer(
+    //       fromURI: _mPath,
+    //       //codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
+    //       whenFinished: () {
+    //         setState(() {});
+    //       })
+    //       .then((value) {
+    //     setState(() {});
+    //   });
+    // });
+
+    // final audioBytes = await audioFile.readAsBytes();
+    // final prompt = 'Translate this audio to $targetLanguage';
+    // final generativeModel = GenerativeModel(
+    //   model: 'gemini-pro-vision',
+    //   apiKey: dotenv.env['API_KEY']!,
+    // );
+    //
+    // final content = [
+    //   Content.multi([
+    //     TextPart(prompt),
+    //     DataPart('audio/mp3', audioBytes),
+    //   ]),
+    // ];
+    //
+    // final response = await generativeModel.generateContent(content);
+    // final translatedText = response.text ?? 'Translation failed';
+    //
+    // print('Translated text: $translatedText');
   }
 
   @override
@@ -80,36 +142,24 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                         ],
                         Container(
                           padding: const EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Color(0XFF5CABC0)),
                           child: InkWell(
                             onTap: () async {
-                              if (isRecording) {
-                                String? filePath = await audioRecorder.stop();
-                                if (filePath != null) {
-                                  setState(() {
-                                    isRecording = false;
-                                    recordingPath = filePath;
-                                  });
-                                }
-                              } else {
-                                if (await audioRecorder.hasPermission()) {
-                                  final appDocumentDir =
-                                      await getApplicationDocumentsDirectory();
-                                  final filePath = p.join(
-                                      appDocumentDir.path, "recording.wav");
-                                  await audioRecorder.start(
-                                    const RecordConfig(),
-                                    path: filePath,
-                                  );
-                                  setState(() {
-                                    isRecording = true;
-                                    recordingPath = null;
-                                  });
-                                }
-                              }
+                            setState(() {
+                              isRecording =! isRecording;
+                            });
+
+                            if(isRecording){
+                              print('will start');
+                              recordAudio();
+                            } else{
+                              print('will stop');
+                              stopAndTranslate('English');
+                            }
+
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.mic_outlined,
                               size: 36,
                             ),
@@ -121,26 +171,6 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                   }),
             ),
             const SizedBox(height: 64),
-            if (recordingPath != null)
-              MaterialButton(
-                onPressed: () async {
-                  if (audioPlayer.playing) {
-                    audioPlayer.stop();
-                    setState(() {
-                      isPlaying = false;
-                    });
-                  } else {
-                    await audioPlayer.setFilePath(recordingPath!);
-                    audioPlayer.play();
-                    setState(() {
-                      isPlaying = true;
-                    });
-                  }
-                },
-                color: Colors.green,
-                child: Text(isPlaying ? 'Stop Playing' : 'Start Playing'),
-              ),
-            const SizedBox(height: 16),
             TranslationField(label: 'Language')
           ],
         ),
