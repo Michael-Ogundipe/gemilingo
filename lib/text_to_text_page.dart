@@ -15,11 +15,10 @@ class TextToTextPage extends StatefulWidget {
 }
 
 class _TextToTextPageState extends State<TextToTextPage> {
-  final TextEditingController _translatedController = TextEditingController();
-  final TextEditingController _inputController = TextEditingController();
+  final  _translatedController = TextEditingController();
+  final  _inputController = TextEditingController();
   Timer? _debounce;
   late final GenerativeModel _model;
-  bool _isTranslating = false;
 
   String _selectedLanguage = 'English';
   String _translatedLanguage = 'French';
@@ -71,8 +70,6 @@ class _TextToTextPageState extends State<TextToTextPage> {
       return;
     }
 
-    setState(() => _isTranslating = true);
-
     try {
       final prompt = 'Translate this text to $_translatedLanguage: "$text".  '
           'Respond with only the translation, no quotes or additional text.';
@@ -84,8 +81,6 @@ class _TextToTextPageState extends State<TextToTextPage> {
       }
     } catch (e) {
       print('Translation error: $e');
-    } finally {
-      setState(() => _isTranslating = false);
     }
   }
 

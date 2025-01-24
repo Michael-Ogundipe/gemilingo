@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'dart:math' show pi;
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gemilingo/widgets/translation_field.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'widgets/blob.dart';
 
@@ -20,16 +21,14 @@ class VoiceToTextPage extends StatefulWidget {
 class _VoiceToTextPageState extends State<VoiceToTextPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _rotationController;
-  late AnimationController _scaleController;
   late Animation<double> _animation;
-  double _scale = 0.85;
+  final double _scale = 0.85;
 
-  FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
+  final _translatedController = TextEditingController();
   final recorder = FlutterSoundRecorder();
-  final  _codec = Codec.aacMP4;
-  final  _mPath = 'audio_record.mp4';
+  final _codec = Codec.aacMP4;
+  final _mPath = 'audio_record.mp4';
   static const theSource = AudioSource.microphone;
-
 
   bool isRecording = false;
 
@@ -48,15 +47,13 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
     openRecorder();
   }
 
-  Future<void> openRecorder()async {
+  Future<void> openRecorder() async {
     await recorder.openRecorder();
-    await _mPlayer!.openPlayer();
   }
 
-
   Future<void> recordAudio() async {
-
-    await recorder.startRecorder(
+    await recorder
+        .startRecorder(
       toFile: _mPath,
       codec: _codec,
       audioSource: theSource,
@@ -69,48 +66,31 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   void stopAndTranslate(String targetLanguage) async {
     final path = await recorder.stopRecorder();
     final audioFile = File(path!);
+    final audioBytes = await audioFile.readAsBytes();
+    final prompt = 'Translate this audio to $targetLanguage';
 
-    print('audio mie');
-    print(audioFile);
+    final generativeModel = GenerativeModel(
+      model: 'gemini-1.5-flash-001',
+      apiKey: dotenv.env['API_KEY']!,
+    );
 
-    // Future.delayed(Duration(seconds: 2), (){
-    //   _mPlayer!
-    //       .startPlayer(
-    //       fromURI: _mPath,
-    //       //codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
-    //       whenFinished: () {
-    //         setState(() {});
-    //       })
-    //       .then((value) {
-    //     setState(() {});
-    //   });
-    // });
+    final content = [
+      Content.multi([
+        TextPart(prompt),
+        DataPart('audio/mp3', audioBytes),
+      ]),
+    ];
 
-    // final audioBytes = await audioFile.readAsBytes();
-    // final prompt = 'Translate this audio to $targetLanguage';
-    // final generativeModel = GenerativeModel(
-    //   model: 'gemini-pro-vision',
-    //   apiKey: dotenv.env['API_KEY']!,
-    // );
-    //
-    // final content = [
-    //   Content.multi([
-    //     TextPart(prompt),
-    //     DataPart('audio/mp3', audioBytes),
-    //   ]),
-    // ];
-    //
-    // final response = await generativeModel.generateContent(content);
-    // final translatedText = response.text ?? 'Translation failed';
-    //
-    // print('Translated text: $translatedText');
+    final response = await generativeModel.generateContent(content);
+    _translatedController.text = response.text ?? 'Translation failed';
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Voice'),
+        title: const Text('Voice Translation'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -146,18 +126,17 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                               shape: BoxShape.circle, color: Color(0XFF5CABC0)),
                           child: InkWell(
                             onTap: () async {
-                            setState(() {
-                              isRecording =! isRecording;
-                            });
+                              setState(() {
+                                isRecording = !isRecording;
+                              });
 
-                            if(isRecording){
-                              print('will start');
-                              recordAudio();
-                            } else{
-                              print('will stop');
-                              stopAndTranslate('English');
-                            }
-
+                              if (isRecording) {
+                                print('will start');
+                                recordAudio();
+                              } else {
+                                print('will stop');
+                                stopAndTranslate('French');
+                              }
                             },
                             child: const Icon(
                               Icons.mic_outlined,
@@ -171,7 +150,11 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                   }),
             ),
             const SizedBox(height: 64),
-            TranslationField(label: 'Language')
+            TranslationField(
+              label: 'Language',
+              controller: _translatedController,
+              readOnly: true,
+            )
           ],
         ),
       ),
