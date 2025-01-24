@@ -4,12 +4,12 @@ import 'dart:math' show pi;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
-
 import 'package:flutter/material.dart';
-import 'package:gemilingo/widgets/translation_field.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'widgets/blob.dart';
+import 'widgets/language_switcher.dart';
+import 'widgets/translation_field.dart';
 
 class VoiceToTextPage extends StatefulWidget {
   const VoiceToTextPage({super.key});
@@ -23,19 +23,51 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   late AnimationController _rotationController;
   late Animation<double> _animation;
   final double _scale = 0.85;
-
   final _translatedController = TextEditingController();
   final recorder = FlutterSoundRecorder();
   final _codec = Codec.aacMP4;
   final _mPath = 'audio_record.mp4';
+  final List<String> _languages = [
+    'English',
+    'French',
+    'Spanish',
+    'Italian',
+    'Portuguese',
+    'Chinese',
+  ];
+  final List<String> _translatedLanguages = [
+    'English',
+    'French',
+    'Spanish',
+    'Italian',
+    'Portuguese',
+    'Chinese',
+  ];
+  final _inputController = TextEditingController();
+
+  String _selectedLanguage = 'English';
+  String _translatedLanguage = 'French';
+
   static const theSource = AudioSource.microphone;
 
   bool isRecording = false;
 
+  void _handleSelectedLanguageChange(String newLanguage) {
+    setState(() {
+      _selectedLanguage = newLanguage;
+    });
+  }
+
+  void _handleTranslatedLanguageChange(String newLanguage) {
+    setState(() {
+      _translatedLanguage = newLanguage;
+    });
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    openRecorder();
     _rotationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -44,7 +76,6 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
         Tween<double>(begin: 0.0, end: 2 * pi).animate(_rotationController);
 
     _rotationController.repeat();
-    openRecorder();
   }
 
   Future<void> openRecorder() async {
@@ -83,7 +114,6 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
 
     final response = await generativeModel.generateContent(content);
     _translatedController.text = response.text ?? 'Translation failed';
-
   }
 
   @override
@@ -108,15 +138,15 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                       children: [
                         if (isRecording) ...[
                           Blob(
-                              color: Color(0xff0092ff),
+                              color: const Color(0xff0092ff),
                               scale: _scale,
                               rotation: _animation.value),
                           Blob(
-                              color: Color(0xff4ac7b7),
+                              color: const Color(0xff4ac7b7),
                               scale: _scale,
                               rotation: _animation.value * 2 - 30),
                           Blob(
-                              color: Color(0xffa4a6f6),
+                              color: const Color(0xffa4a6f6),
                               scale: _scale,
                               rotation: _animation.value * 3 - 45),
                         ],
@@ -131,11 +161,12 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                               });
 
                               if (isRecording) {
-                                print('will start');
+                                if (_translatedController.text.isNotEmpty) {
+                                  _translatedController.clear();
+                                }
                                 recordAudio();
                               } else {
-                                print('will stop');
-                                stopAndTranslate('French');
+                                stopAndTranslate(_translatedLanguage);
                               }
                             },
                             child: const Icon(
@@ -151,10 +182,19 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
             ),
             const SizedBox(height: 64),
             TranslationField(
-              label: 'Language',
+              label: _translatedLanguage,
               controller: _translatedController,
               readOnly: true,
-            )
+            ),
+            const SizedBox(height: 32),
+            LanguageSwitcher(
+              inputController: _inputController,
+              translateText: (string) {},
+              selectedLanguage: _selectedLanguage,
+              translatedLanguage: _translatedLanguage,
+              onSelectedLanguageChanged: _handleSelectedLanguageChange,
+              onTranslatedLanguageChanged: _handleTranslatedLanguageChange,
+            ),
           ],
         ),
       ),

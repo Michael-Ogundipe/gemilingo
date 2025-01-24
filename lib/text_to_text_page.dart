@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import 'widgets/drop_down_widget.dart';
+
 import 'widgets/translation_field.dart';
 
 class TextToTextPage extends StatefulWidget {
@@ -17,29 +17,13 @@ class TextToTextPage extends StatefulWidget {
 class _TextToTextPageState extends State<TextToTextPage> {
   final  _translatedController = TextEditingController();
   final  _inputController = TextEditingController();
-  Timer? _debounce;
   late final GenerativeModel _model;
 
+  Timer? _debounce;
   String _selectedLanguage = 'English';
   String _translatedLanguage = 'French';
 
-  final List<String> _languages = [
-    'English',
-    'French',
-    'Spanish',
-    'Italian',
-    'Portuguese',
-    'Chinese',
-  ];
 
-  final List<String> _translatedLanguages = [
-    'English',
-    'French',
-    'Spanish',
-    'Italian',
-    'Portuguese',
-    'Chinese',
-  ];
 
   @override
   void initState() {
@@ -60,11 +44,11 @@ class _TextToTextPageState extends State<TextToTextPage> {
   void _onTextChanged(String text) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      _translateText(text);
+      translateText(text);
     });
   }
 
-  Future<void> _translateText(String text) async {
+  Future<void> translateText(String text) async {
     if (text.isEmpty) {
       _translatedController.clear();
       return;
@@ -95,60 +79,13 @@ class _TextToTextPageState extends State<TextToTextPage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropDownWidget(
-                  value: _selectedLanguage,
-                  items: _languages.map((String language) {
-                    return DropdownMenuItem(
-                      value: language,
-                      child: Text(language),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        _selectedLanguage = newValue;
-                        if (_inputController.text.isNotEmpty) {
-                          _translateText(_inputController.text);
-                        }
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(width: 16),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  ),
-                  child: const Icon(Icons.swap_horiz_outlined),
-                ),
-                const SizedBox(width: 16),
-                DropDownWidget(
-                  value: _translatedLanguage,
-                  items: _translatedLanguages.map((String language) {
-                    return DropdownMenuItem(
-                      value: language,
-                      child: Text(language),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        _translatedLanguage = newValue;
-                        if (_inputController.text.isNotEmpty) {
-                          _translateText(_inputController.text);
-                        }
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
+            // LanguageSwitcher(
+            //   inputController: _inputController,
+            //   translateText: translateText,
+            //   selectedLanguage: _selectedLanguage,
+            //   translatedLanguage: _translatedLanguage,
+            //
+            // ),
             const SizedBox(height: 16),
             TranslationField(
               label: _selectedLanguage,
