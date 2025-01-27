@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../conversation_translation_page.dart';
 import '../home_page.dart';
 import '../text_to_text_page.dart';
 import '../voice_to_text_page.dart';
@@ -19,6 +20,8 @@ class RouteGenerator {
         return navigateToRoute(const TextToTextPage());
       case voiceToText:
         return navigateToRoute(const VoiceToTextPage());
+      case conversation:
+        return navigateToRoute(const ConversationTranslationPage());
     }
     return null;
   }

@@ -6,6 +6,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'widgets/blob.dart';
 import 'widgets/language_switcher.dart';
@@ -27,22 +28,7 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   final recorder = FlutterSoundRecorder();
   final _codec = Codec.aacMP4;
   final _mPath = 'audio_record.mp4';
-  final List<String> _languages = [
-    'English',
-    'French',
-    'Spanish',
-    'Italian',
-    'Portuguese',
-    'Chinese',
-  ];
-  final List<String> _translatedLanguages = [
-    'English',
-    'French',
-    'Spanish',
-    'Italian',
-    'Portuguese',
-    'Chinese',
-  ];
+
   final _inputController = TextEditingController();
 
   String _selectedLanguage = 'English';
@@ -78,9 +64,29 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
     _rotationController.repeat();
   }
 
+@override
+  void dispose() {
+    _rotationController.dispose();
+    _inputController.dispose();
+    super.dispose();
+  }
+
   Future<void> openRecorder() async {
     await recorder.openRecorder();
+    final status = await Permission.microphone.request();
+
+    if (status.isGranted) {
+      await recorder.openRecorder();
+    } else if (status.isDenied) {
+
+    } else if (status.isPermanentlyDenied) {
+      await openAppSettings();
+    }
+
   }
+
+
+
 
   Future<void> recordAudio() async {
     await recorder

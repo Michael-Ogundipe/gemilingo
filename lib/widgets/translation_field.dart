@@ -44,7 +44,7 @@ class _TranslationFieldState extends State<TranslationField> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 16),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16, top: 16),
       height: MediaQuery.of(context).size.height * 0.25,
       width: double.infinity,
       decoration: BoxDecoration(

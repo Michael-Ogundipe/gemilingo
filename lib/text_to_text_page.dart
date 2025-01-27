@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-
+import 'widgets/language_switcher.dart';
 import 'widgets/translation_field.dart';
 
 class TextToTextPage extends StatefulWidget {
@@ -48,6 +48,18 @@ class _TextToTextPageState extends State<TextToTextPage> {
     });
   }
 
+  void _handleSelectedLanguageChange(String newLanguage) {
+    setState(() {
+      _selectedLanguage = newLanguage;
+    });
+  }
+
+  void _handleTranslatedLanguageChange(String newLanguage) {
+    setState(() {
+      _translatedLanguage = newLanguage;
+    });
+  }
+
   Future<void> translateText(String text) async {
     if (text.isEmpty) {
       _translatedController.clear();
@@ -76,28 +88,31 @@ class _TextToTextPageState extends State<TextToTextPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            // LanguageSwitcher(
-            //   inputController: _inputController,
-            //   translateText: translateText,
-            //   selectedLanguage: _selectedLanguage,
-            //   translatedLanguage: _translatedLanguage,
-            //
-            // ),
-            const SizedBox(height: 16),
-            TranslationField(
-              label: _selectedLanguage,
-              hintText: 'Enter your text...',
-              onChanged: _onTextChanged,
-            ),
-            TranslationField(
-              label: _translatedLanguage,
-              controller: _translatedController,
-              readOnly: true,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              LanguageSwitcher(
+                inputController: _inputController,
+                translateText: (string) {},
+                selectedLanguage: _selectedLanguage,
+                translatedLanguage: _translatedLanguage,
+                onSelectedLanguageChanged: _handleSelectedLanguageChange,
+                onTranslatedLanguageChanged: _handleTranslatedLanguageChange,
+              ),
+              const SizedBox(height: 16),
+              TranslationField(
+                label: _selectedLanguage,
+                hintText: 'Enter your text...',
+                onChanged: _onTextChanged,
+              ),
+              TranslationField(
+                label: _translatedLanguage,
+                controller: _translatedController,
+                readOnly: true,
+              ),
+            ],
+          ),
         ),
       ),
     );

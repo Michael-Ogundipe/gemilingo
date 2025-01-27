@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, conversation),
                   icon: const Icon(Icons.translate),
                   label: const Text(
                     'Conversation Translation',

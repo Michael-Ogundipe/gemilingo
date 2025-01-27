@@ -5,3 +5,4 @@
 const String home = '/home';
 const String textToText = '/textToText';
 const String voiceToText = '/voiceToText';
+const String conversation = '/conversation';
