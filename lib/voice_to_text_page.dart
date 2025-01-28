@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math' show pi;
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -8,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'widgets/blob.dart';
 import 'widgets/language_switcher.dart';
+import 'widgets/microphone.dart';
 import 'widgets/translation_field.dart';
 
 class VoiceToTextPage extends StatefulWidget {
@@ -21,9 +20,6 @@ class VoiceToTextPage extends StatefulWidget {
 
 class _VoiceToTextPageState extends State<VoiceToTextPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _rotationController;
-  late Animation<double> _animation;
-  final double _scale = 0.85;
   final _translatedController = TextEditingController();
   final recorder = FlutterSoundRecorder();
   final _codec = Codec.aacMP4;
@@ -54,19 +50,10 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   void initState() {
     super.initState();
     openRecorder();
-    _rotationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    );
-    _animation =
-        Tween<double>(begin: 0.0, end: 2 * pi).animate(_rotationController);
-
-    _rotationController.repeat();
   }
 
-@override
+  @override
   void dispose() {
-    _rotationController.dispose();
     _inputController.dispose();
     super.dispose();
   }
@@ -78,15 +65,10 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
     if (status.isGranted) {
       await recorder.openRecorder();
     } else if (status.isDenied) {
-
     } else if (status.isPermanentlyDenied) {
       await openAppSettings();
     }
-
   }
-
-
-
 
   Future<void> recordAudio() async {
     await recorder
@@ -136,55 +118,24 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
             SizedBox(
               width: 100,
               height: 100,
-              child: AnimatedBuilder(
-                  animation: _rotationController,
-                  builder: (context, child) {
-                    return Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        if (isRecording) ...[
-                          Blob(
-                              color: const Color(0xff0092ff),
-                              scale: _scale,
-                              rotation: _animation.value),
-                          Blob(
-                              color: const Color(0xff4ac7b7),
-                              scale: _scale,
-                              rotation: _animation.value * 2 - 30),
-                          Blob(
-                              color: const Color(0xffa4a6f6),
-                              scale: _scale,
-                              rotation: _animation.value * 3 - 45),
-                        ],
-                        Container(
-                          padding: const EdgeInsets.all(20.0),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Color(0XFF5CABC0)),
-                          child: InkWell(
-                            onTap: () async {
-                              setState(() {
-                                isRecording = !isRecording;
-                              });
+              child: Microphone(
+                icon: isRecording ? Icons.stop : Icons.mic_outlined,
+                isRecording: isRecording,
+                onPressed: () async {
+                  setState(() {
+                    isRecording = !isRecording;
+                  });
 
-                              if (isRecording) {
-                                if (_translatedController.text.isNotEmpty) {
-                                  _translatedController.clear();
-                                }
-                                recordAudio();
-                              } else {
-                                stopAndTranslate(_translatedLanguage);
-                              }
-                            },
-                            child: const Icon(
-                              Icons.mic_outlined,
-                              size: 36,
-                            ),
-                          ),
-                        )
-                        //   ],
-                      ],
-                    );
-                  }),
+                  if (isRecording) {
+                    if (_translatedController.text.isNotEmpty) {
+                      _translatedController.clear();
+                    }
+                    recordAudio();
+                  } else {
+                    stopAndTranslate(_translatedLanguage);
+                  }
+                },
+              ),
             ),
             const SizedBox(height: 64),
             TranslationField(
