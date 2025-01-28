@@ -18,3 +18,6 @@ AI Models: Powered by Gemini AI for efficient and accurate translations.
 ### Why Gemilingo?
 Gemilingo is not just another translation app; it is built to handle real-time, practical communication scenarios, making it ideal for travelers, educators, business professionals, and anyone navigating multilingual environments.
 
+### Installation Link
+https://drive.google.com/file/d/1AyTEI9xwdTLXkn9CPUC_Lo9jz4foHh3X/view?usp=sharing
+
