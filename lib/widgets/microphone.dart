@@ -54,18 +54,40 @@ class _MicrophoneState extends State<Microphone>
             children: [
               if (widget.isRecording) ...[
                 Blob(
-                    color: const Color(0xff0092ff), rotation: _animation.value),
+                  color: const Color(0xff0092ff),
+                  scale: 1,
+                  rotation: _animation.value,
+                ),
                 Blob(
                     color: const Color(0xff4ac7b7),
+                    scale: 1,
                     rotation: _animation.value * 2 - 30),
                 Blob(
                     color: const Color(0xffa4a6f6),
+                    scale: 0.9,
                     rotation: _animation.value * 3 - 45),
               ],
               Container(
                 padding: const EdgeInsets.all(20.0),
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Color(0XFF5CABC0)),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0XFF5CABC0),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blue.shade300, // Light blue
+                      Colors.blue.shade700, // Dark blue
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(2, 4),
+                    ),
+                  ],
+                ),
                 child: InkWell(
                   onTap: widget.onPressed,
                   child: Icon(
