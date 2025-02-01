@@ -54,28 +54,20 @@ Have real-time conversations with automatic speech-to-text and voice note output
 3. Speak naturally, and Gemilingo will handle real-time translation.
 4. The conversation will be displayed as text and voice output.
 
-### 4. Settings & Customization
-*(Attach a screenshot of the settings menu here.)*
-- **Language Preferences:** Choose your primary and secondary languages.
-- **Voice Settings:** Adjust voice speed and tone.
-- **Theme:** Switch between light and dark modes.
 
-## FAQ Section
-### Q: How many languages does Gemilingo support?
-A: Currently, Gemilingo supports over **X** languages. *(Update with actual number.)*
+## 🤝 Contributing 
 
-### Q: Can I save translations for later use?
-A: Yes! Translations can be saved in the history section for future reference.
+Contributions are welcome! Please fork the repository and submit pull requests for any enhancements or bug fixes.
 
-### Q: Does Gemilingo require an internet connection?
-A: While most features work online, **Offline Mode** allows basic text translation without an internet connection. *(Confirm if applicable.)*
+## ⭐ Star the Repo
 
-## Contact & Support
-For any issues, feedback, or suggestions, reach out to us:
-- **Support Email:** support@gemilingo.com
-- **Website:** [www.gemilingo.com](#)
-- **Social Media:** [Twitter](#) | [Facebook](#) | [Instagram](#)
+If you find this repository useful, don't forget to give it a star! ⭐  
+It helps others discover the project and shows your appreciation for the work.
 
----
+[Star this repo](https://github.com/Michael-Ogundipe/gemilingo.git)
 
-📌 *Don't forget to attach the appropriate screenshots where indicated!* 🚀
+## 📝 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+
