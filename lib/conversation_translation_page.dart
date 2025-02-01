@@ -145,8 +145,6 @@ class _ConversationTranslationPageState
               controller: _translatedController,
               readOnly: true,
             ),
-            // radio waves to play audio
-            // Radio wave animation
             SizedBox(
               height: 100,
               child: AnimatedBuilder(
@@ -154,10 +152,6 @@ class _ConversationTranslationPageState
                 builder: (context, child) {
                   return CustomPaint(
                     size: const Size(double.infinity, 100),
-                    // painter: RadioWavePainter(
-                    //   animation: _controller.value,
-                    //   isPlaying: isPlaying,
-                    // ),
                     painter: BarWaveformPainter(
                       animation: _controller.value,
                       isPlaying: isPlaying,

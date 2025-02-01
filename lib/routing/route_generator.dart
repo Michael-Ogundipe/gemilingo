@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../conversation_translation_page.dart';
 import '../home_page.dart';
+import '../service/recording_service.dart';
 import '../text_to_text_page.dart';
 import '../voice_to_text_page.dart';
 import 'routes.dart';
@@ -15,13 +16,23 @@ class RouteGenerator {
   Route? routeGenerate(RouteSettings route) {
     switch (route.name) {
       case '/':
-        return navigateToRoute(const HomePage());
+        return navigateToRoute(
+          const HomePage(),
+        );
       case textToText:
-        return navigateToRoute(const TextToTextPage());
+        return navigateToRoute(
+          const TextToTextPage(),
+        );
       case voiceToText:
-        return navigateToRoute(const VoiceToTextPage());
+        return navigateToRoute(
+          VoiceToTextPage(
+            recordingService: RecordingService(),
+          ),
+        );
       case conversation:
-        return navigateToRoute(const ConversationTranslationPage());
+        return navigateToRoute(
+          const ConversationTranslationPage(),
+        );
     }
     return null;
   }
