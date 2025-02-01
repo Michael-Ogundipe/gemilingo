@@ -3,8 +3,12 @@
 ## Introduction
 Welcome to **Gemilingo** – a powerful AI-driven language translation app designed to break language barriers. Whether you're a traveler, a student, or a business professional, Gemilingo helps you communicate effortlessly with real-time translation features.
 
-## Background
-Gemilingo was inspired by a real-life need: seamless communication across different languages. Unlike traditional translation apps, Gemilingo not only provides text and voice translations but also enables real-time conversation translation, making it a must-have tool for global interactions.
+## Background Story
+The idea for **Gemilingo** was born when a first-time visitor came to church and could only speak French. It was quite difficult to communicate with him, and I could only rely on translation apps that were slow and lacked real-time interaction. This experience made me realize how challenging it can be to bridge language barriers in everyday situations.
+
+Gemilingo was created to solve this problem—providing real-time text and voice translation to enable seamless communication, whether in conversations, meetings, or social interactions.
+
+This experience led to the development of Gemilingo—an app that not only translates text and speech but also allows **real-time spoken language translation**, converting speech into voice notes in the user's preferred language.
 
 ## Key Features
 ### 1. Text-to-Text Translation
@@ -16,13 +20,10 @@ Speak into the app, and it converts your speech into translated text.
 ### 3. Conversation Translation
 Have real-time conversations with automatic speech-to-text and voice note output in your preferred language.
 
-### 4. Offline Mode *(if applicable)*
-Translate text without needing an internet connection. *(Include details if supported.)*
-
 ## How to Use the App
 
 ### 1. Installation & Setup
-- Download Gemilingo from the [App Store](#) or [Google Play](#).
+- Download Gemilingo from http: .. 
 - Open the app and follow the on-screen instructions to set up your preferred language settings.
 
 ### 2. Navigating the UI
@@ -38,7 +39,8 @@ Translate text without needing an internet connection. *(Include details if supp
 4. View the translated text instantly.
 
 #### **Voice-to-Text Translation**
-*(Attach a screenshot of the voice input screen here.)*
+<img width="391" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/814a8d5c-dff5-4cdb-9b01-72512b32a177" />
+
 1. Tap the **Voice Translation** button.
 2. Speak into the microphone.
 3. The app transcribes and translates your speech in real-time.
