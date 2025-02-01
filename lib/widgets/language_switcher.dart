@@ -67,7 +67,7 @@ class LanguageSwitcher extends StatelessWidget {
         ),
         const SizedBox(width: 16),
         DropDownWidget(
-          value: translatedLanguage!,
+          value: translatedLanguage,
           items: _translatedLanguages.map((String language) {
             return DropdownMenuItem(
               value: language,

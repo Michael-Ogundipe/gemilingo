@@ -46,6 +46,8 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   @override
   void dispose() {
     _inputController.dispose();
+    _translatedController.dispose();
+    widget.recordingService.recorder.closeRecorder();
     super.dispose();
   }
 

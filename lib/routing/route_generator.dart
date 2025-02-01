@@ -31,7 +31,9 @@ class RouteGenerator {
         );
       case conversation:
         return navigateToRoute(
-          const ConversationTranslationPage(),
+          ConversationTranslationPage(
+            recordingService: RecordingService(),
+          ),
         );
     }
     return null;
