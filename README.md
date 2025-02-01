@@ -31,7 +31,6 @@ Have real-time conversations with automatic speech-to-text and voice note output
 <img width="391" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/814a8d5c-dff5-4cdb-9b01-72512b32a177" />
 
 - The home screen provides quick access to all translation modes.
-- Use the menu to access settings, history, and saved translations.
 
 ### 3. Performing Translations
 #### **Text-to-Text Translation**
