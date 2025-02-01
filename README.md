@@ -36,9 +36,9 @@ Have real-time conversations with automatic speech-to-text and voice note output
 #### **Text-to-Text Translation**
 
 
-https://github.com/user-attachments/assets/fa1fff67-df5b-4c98-8855-75d1fd365e74
-
-
+<a href="https://github.com/user-attachments/assets/fa1fff67-df5b-4c98-8855-75d1fd365e74">
+  <img src="https://github.com/user-attachments/assets/fa1fff67-df5b-4c98-8855-75d1fd365e74" height="400px" width="auto">
+</a>
 
 
 1. Tap on the **Text Translation** mode.
