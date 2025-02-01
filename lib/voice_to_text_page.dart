@@ -16,6 +16,7 @@ class VoiceToTextPage extends StatefulWidget {
   State<VoiceToTextPage> createState() => _VoiceToTextPageState();
 }
 
+
 class _VoiceToTextPageState extends State<VoiceToTextPage>
     with SingleTickerProviderStateMixin {
   final _translatedController = TextEditingController();
@@ -23,6 +24,7 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   String _selectedLanguage = 'English';
   String _translatedLanguage = 'French';
   bool isRecording = false;
+  bool isTranslating = false;
 
   void _handleSelectedLanguageChange(String newLanguage) {
     setState(() {
@@ -53,7 +55,13 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Voice Translation'),
+        title: Text(
+          isRecording
+              ? 'Listening...'
+              : isTranslating
+                  ? 'Translating...'
+                  : 'Voice Translation',
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -77,8 +85,17 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
                     }
                     widget.recordingService.recordAudio();
                   } else {
+                    setState(() {
+                      isTranslating = true;
+                    });
                     _translatedController.text = await widget.recordingService
-                        .stopAndTranslate(_translatedLanguage);
+                        .stopAndTranslate(_translatedLanguage)
+                        .then((value) {
+                      setState(() {
+                        isTranslating = false;
+                      });
+                      return value;
+                    });
                   }
                 },
               ),

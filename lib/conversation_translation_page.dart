@@ -121,7 +121,11 @@ class _ConversationTranslationPageState
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          isRecording ? 'Listening...' : 'Translator',
+          isRecording
+              ? 'Listening...'
+              : isTranslating
+                  ? 'Translating...'
+                  : 'Translator',
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -142,8 +146,17 @@ class _ConversationTranslationPageState
               }
               widget.recordingService.recordAudio();
             } else {
+              setState(() {
+                isTranslating = true;
+              });
               _translatedController.text = await widget.recordingService
-                  .stopAndTranslate(_translatedLanguage);
+                  .stopAndTranslate(_translatedLanguage)
+                  .then((value) {
+                setState(() {
+                  isTranslating = false;
+                });
+                return value;
+              });
 
               await flutterTts.speak(_translatedController.text);
             }
