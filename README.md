@@ -34,6 +34,13 @@ Have real-time conversations with automatic speech-to-text and voice note output
 
 ### 3. Performing Translations
 #### **Text-to-Text Translation**
+
+
+https://github.com/user-attachments/assets/fa1fff67-df5b-4c98-8855-75d1fd365e74
+
+
+
+
 1. Tap on the **Text Translation** mode.
 2. Enter your text in the provided field.
 3. Select the target language and hit **Translate**.
