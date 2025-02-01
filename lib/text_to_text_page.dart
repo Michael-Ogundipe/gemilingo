@@ -4,31 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
+import 'service/gemini_service.dart';
 import 'widgets/language_switcher.dart';
 import 'widgets/translation_field.dart';
 
 class TextToTextPage extends StatefulWidget {
-  const TextToTextPage({super.key});
+  const TextToTextPage({
+    super.key,
+    required this.geminiService,
+  });
+
+  final GeminiService geminiService;
 
   @override
   State<TextToTextPage> createState() => _TextToTextPageState();
 }
 
 class _TextToTextPageState extends State<TextToTextPage> {
-  final  _translatedController = TextEditingController();
-  final  _inputController = TextEditingController();
-  late final GenerativeModel _model;
+  final _translatedController = TextEditingController();
+  final _inputController = TextEditingController();
 
   Timer? _debounce;
   String _selectedLanguage = 'English';
   String _translatedLanguage = 'French';
 
-
-
   @override
   void initState() {
     super.initState();
-    _model = GenerativeModel(
+    widget.geminiService.model = GenerativeModel(
       model: 'gemini-pro',
       apiKey: dotenv.env['API_KEY']!, // Replace with your API key
     );
@@ -43,8 +46,15 @@ class _TextToTextPageState extends State<TextToTextPage> {
 
   void _onTextChanged(String text) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      translateText(text);
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      if (text.isEmpty) {
+        _translatedController.clear();
+        return;
+      }
+
+      _translatedController.text = (await
+      widget.geminiService.translateText(text, _translatedLanguage));
+
     });
   }
 
@@ -57,27 +67,9 @@ class _TextToTextPageState extends State<TextToTextPage> {
   void _handleTranslatedLanguageChange(String newLanguage) {
     setState(() {
       _translatedLanguage = newLanguage;
-    });
-  }
-
-  Future<void> translateText(String text) async {
-    if (text.isEmpty) {
       _translatedController.clear();
-      return;
-    }
-
-    try {
-      final prompt = 'Translate this text to $_translatedLanguage: "$text".  '
-          'Respond with only the translation, no quotes or additional text.';
-      final content = [Content.text(prompt)];
-      final response = await _model.generateContent(content);
-
-      if (response.text != null) {
-        _translatedController.text = response.text!;
-      }
-    } catch (e) {
-      print('Translation error: $e');
-    }
+      _inputController.clear();
+    });
   }
 
   @override
@@ -93,7 +85,6 @@ class _TextToTextPageState extends State<TextToTextPage> {
             children: [
               const SizedBox(height: 20),
               LanguageSwitcher(
-                inputController: _inputController,
                 translateText: (string) {},
                 selectedLanguage: _selectedLanguage,
                 translatedLanguage: _translatedLanguage,
@@ -103,6 +94,7 @@ class _TextToTextPageState extends State<TextToTextPage> {
               const SizedBox(height: 16),
               TranslationField(
                 label: _selectedLanguage,
+                controller: _inputController,
                 hintText: 'Enter your text...',
                 onChanged: _onTextChanged,
               ),

@@ -2,25 +2,26 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiService {
-  late final GenerativeModel _model;
+  late GenerativeModel model;
 
   GeminiService() {
     final apiKey = dotenv.env['API_KEY']!;
-    _model = GenerativeModel(
+    model = GenerativeModel(
       model: 'gemini-pro',
       apiKey: apiKey,
     );
   }
 
-  Future<String> translateText(String text, String targetLanguage) async {
+  Future<String> translateText(String text, String translatedLanguage) async {
     try {
-      final prompt = 'Translate this text to $targetLanguage: "$text"'
+      final prompt = 'Translate this text to $translatedLanguage: "$text".  '
           'Respond with only the translation, no quotes or additional text.';
       final content = [Content.text(prompt)];
-      final response = await _model.generateContent(content);
+      final response = await model.generateContent(content);
+
       return response.text ?? 'Translation error';
     } catch (e) {
-      return 'Error: $e';
+      return 'Translation error';
     }
   }
 }

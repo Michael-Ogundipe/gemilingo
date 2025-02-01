@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../conversation_translation_page.dart';
 import '../home_page.dart';
+import '../service/gemini_service.dart';
 import '../service/recording_service.dart';
 import '../text_to_text_page.dart';
 import '../voice_to_text_page.dart';
@@ -21,7 +22,9 @@ class RouteGenerator {
         );
       case textToText:
         return navigateToRoute(
-          const TextToTextPage(),
+          TextToTextPage(
+            geminiService: GeminiService(),
+          ),
         );
       case voiceToText:
         return navigateToRoute(

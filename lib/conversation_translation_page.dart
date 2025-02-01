@@ -25,7 +25,6 @@ class _ConversationTranslationPageState
     with SingleTickerProviderStateMixin {
   late FlutterTts flutterTts;
   late AnimationController _controller;
-  final _inputController = TextEditingController();
   final _translatedController = TextEditingController();
   final textToSpeech = FlutterTts();
 
@@ -111,7 +110,6 @@ class _ConversationTranslationPageState
   void dispose() {
     flutterTts.stop();
     _controller.dispose();
-    _inputController.dispose();
     _translatedController.dispose();
     widget.recordingService.recorder.closeRecorder();
     super.dispose();
@@ -148,9 +146,6 @@ class _ConversationTranslationPageState
                   .stopAndTranslate(_translatedLanguage);
 
               await flutterTts.speak(_translatedController.text);
-
-
-
             }
           },
         ),
@@ -163,7 +158,6 @@ class _ConversationTranslationPageState
           children: [
             const SizedBox(height: 16),
             LanguageSwitcher(
-              inputController: _inputController,
               translateText: (string) {},
               selectedLanguage: _selectedLanguage,
               translatedLanguage: _translatedLanguage,
@@ -212,7 +206,6 @@ class _ConversationTranslationPageState
                   onChanged: (value) async {
                     setState(() {
                       speed = value;
-                      print(speed);
                     });
                     await flutterTts.setSpeechRate(speed);
                   },

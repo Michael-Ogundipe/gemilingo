@@ -5,7 +5,6 @@ import 'drop_down_widget.dart';
 class LanguageSwitcher extends StatelessWidget {
    LanguageSwitcher({
     super.key,
-    required this.inputController,
     required this.translateText,
     required this.selectedLanguage,
     required this.translatedLanguage,
@@ -13,7 +12,6 @@ class LanguageSwitcher extends StatelessWidget {
     required this.onTranslatedLanguageChanged,
   });
 
-  final TextEditingController inputController;
   final void Function(String) translateText;
   final String selectedLanguage;
   final String translatedLanguage;

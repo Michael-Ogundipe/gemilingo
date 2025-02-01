@@ -19,7 +19,6 @@ class VoiceToTextPage extends StatefulWidget {
 class _VoiceToTextPageState extends State<VoiceToTextPage>
     with SingleTickerProviderStateMixin {
   final _translatedController = TextEditingController();
-  final _inputController = TextEditingController();
 
   String _selectedLanguage = 'English';
   String _translatedLanguage = 'French';
@@ -45,7 +44,6 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
 
   @override
   void dispose() {
-    _inputController.dispose();
     _translatedController.dispose();
     widget.recordingService.recorder.closeRecorder();
     super.dispose();
@@ -93,7 +91,6 @@ class _VoiceToTextPageState extends State<VoiceToTextPage>
             ),
             const SizedBox(height: 32),
             LanguageSwitcher(
-              inputController: _inputController,
               translateText: (string) {},
               selectedLanguage: _selectedLanguage,
               translatedLanguage: _translatedLanguage,
