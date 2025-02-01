@@ -27,7 +27,9 @@ Have real-time conversations with automatic speech-to-text and voice note output
 - Open the app and follow the on-screen instructions to set up your preferred language settings.
 
 ### 2. Navigating the UI
-*(Attach a screenshot of the home screen here.)*
+
+<img width="391" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/814a8d5c-dff5-4cdb-9b01-72512b32a177" />
+
 - The home screen provides quick access to all translation modes.
 - Use the menu to access settings, history, and saved translations.
 
@@ -39,7 +41,8 @@ Have real-time conversations with automatic speech-to-text and voice note output
 4. View the translated text instantly.
 
 #### **Voice-to-Text Translation**
-<img width="391" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/814a8d5c-dff5-4cdb-9b01-72512b32a177" />
+
+*(Attach a screenshot of a conversation translation in progress.)*
 
 1. Tap the **Voice Translation** button.
 2. Speak into the microphone.
