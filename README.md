@@ -28,14 +28,14 @@ Have real-time conversations with automatic speech-to-text and voice note output
 
 ### 2. Navigating the UI
 
-<img width="auto" height="400px" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/d49feda2-85ea-456d-ad24-b9ab391db379" />
+<img width="auto" height="400px" alt="Navigating the UI" src="https://github.com/user-attachments/assets/d49feda2-85ea-456d-ad24-b9ab391db379" />
 
 - The home screen provides quick access to all translation modes.
 
 ### 3. Performing Translations
 #### **Text-to-Text Translation**
 
-<img width="auto" height="400px" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/997e9f22-e48f-4070-b7a4-cdde5dee3a32" />
+<img width="auto" height="400px" alt="Text-to-Text Translation" src="https://github.com/user-attachments/assets/997e9f22-e48f-4070-b7a4-cdde5dee3a32" />
 
 1. Tap on the **Text Translation** mode.
 2. Enter your text in the provided field.
@@ -44,14 +44,16 @@ Have real-time conversations with automatic speech-to-text and voice note output
 
 #### **Voice-to-Text Translation**
 
-*(Attach a screenshot of a conversation translation in progress.)*
+<img width="auto" height="400px" alt="Voice-to-Text Translation" src="https://github.com/user-attachments/assets/a91b728c-a8b2-491c-b0b4-393fb32a5eed" />
 
 1. Tap the **Voice Translation** button.
 2. Speak into the microphone.
 3. The app transcribes and translates your speech in real-time.
 
 #### **Conversation Translation**
-*(Attach a screenshot of a conversation translation in progress.)*
+
+<img width="auto" height="400px" alt="Conversation Translation" src="https://github.com/user-attachments/assets/034aff22-f9c1-40d2-9765-fee66ad07bcc" />
+
 1. Select **Conversation Mode**.
 2. Choose your language and the language of the other speaker.
 3. Speak naturally, and Gemilingo will handle real-time translation.
