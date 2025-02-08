@@ -28,18 +28,14 @@ Have real-time conversations with automatic speech-to-text and voice note output
 
 ### 2. Navigating the UI
 
-<img width="auto" height="400px" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/814a8d5c-dff5-4cdb-9b01-72512b32a177" />
+<img width="auto" height="400px" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/d49feda2-85ea-456d-ad24-b9ab391db379" />
 
 - The home screen provides quick access to all translation modes.
 
 ### 3. Performing Translations
 #### **Text-to-Text Translation**
 
-
-<a href="https://github.com/user-attachments/assets/fa1fff67-df5b-4c98-8855-75d1fd365e74">
-  <img src="https://github.com/user-attachments/assets/fa1fff67-df5b-4c98-8855-75d1fd365e74" height="400px" width="auto">
-</a>
-
+<img width="auto" height="400px" alt="Screenshot 2025-02-01 at 10 59 20 AM" src="https://github.com/user-attachments/assets/997e9f22-e48f-4070-b7a4-cdde5dee3a32" />
 
 1. Tap on the **Text Translation** mode.
 2. Enter your text in the provided field.
