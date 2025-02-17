@@ -23,7 +23,7 @@ Have real-time conversations with automatic speech-to-text and voice note output
 ## How to Use the App
 
 ### 1. Installation & Setup
-- Download Gemilingo from **https://drive.google.com/file/d/1aR2f9QiRpskLWvyVKTRK5px06Rm5kjRq/view?usp=drive_link**
+- Download Gemilingo from **https://drive.google.com/file/d/1v05932LjmY5S44ZlVTWfODY3uUhUes1r/view?usp=drive_link**
 - Open the app and follow the on-screen instructions to set up your preferred language settings.
 
 ### 2. Navigating the UI
